@@ -62,9 +62,9 @@
 			message: function() {
 				switch (Util.getGameState(this.user1, this.user2, this.mode)) {
 				case 1:
-					return "1";
+					return "試合終了";
 				case -1:
-					return "2";
+					return "試合終了";
 				default:
 					return "";
 				}
@@ -89,7 +89,7 @@
 						tapCount = 0;
 
 						user.score++;
-						let str = `${this.user1.score} ${this.user2.score}`;
+						let str = `${this.user1.score}対${this.user2.score}`;
 
 						switch (Util.getGameState(this.user1, this.user2, this.mode)) {
 						case 1:
