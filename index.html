@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>スコア計測</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+		<link href="main.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="container"
+			 class="container"
+		>
+			<div class="row justify-content-around h-50 mt-1 mb-1">
+				<div class="col-4 p-0">
+					<button type="button" class="btn btn-outline-primary btn-lg btn-block h-100"
+							@touchstart ="touchstart($event, user1)"
+								  :disabled="!gaming">
+						<i class="fa fa-user fa-3x"></i>
+						<h1>{{ user1.score }}</h1>
+					</button>
+				</div>
+				<div class="col-4 p-0">
+					<button type="button" class="btn btn-outline-secondary btn-lg btn-block h-100"
+								  @touchstart ="touchstart($event, user2)"
+								  :disabled="!isGame">
+						<i class="far fa-user fa-3x"></i>
+						<h1>{{ user2.score }}</h1>
+					</button>
+				</div>
+			</div>
+			<div class="row">
+				<span>{{ message }}</span>
+			</div>
+			<div class="row align-items-center h-25"
+				 v-show="gaming">
+				<div class="col m-1 h-100">
+					<button type="button" class="btn btn-secondary btn-block h-100"
+							@click="reset">リセット</button>
+				</div>
+				<div class="col m-1 h-100">
+					<button type="button" class="btn btn-default btn-block h-100"
+					@click="toggleMute" v-bind:class="{ disabled: mute }">
+						<i class="fas fa-volume-mute fa-5x"></i>
+					</button>
+				</div>
+			</div>
+			<div class="row h-25"
+						v-show="!gaming">
+				<div class="btn-group btn-group-toggle h-100 w-75" data-toggle="buttons">
+					<template v-for="(item, index) in modes">
+						<label :for="index" class="btn btn-primary h-100"
+								 v-bind:class="{active: mode == item }">
+							<input name="mode" type="radio"
+										 :id="index" :value="item" v-model="mode" :disabled="gaming" />
+							<h2>{{ item }}</h2>
+						</label>
+				</template>
+				</div>
+				<div class="col">
+					<button class="btn btn-primary btn-lg h-100 w-100"
+								   @click="set()"><i class="fas fa-play fa-2x"></i></button>
+				</div>
+			</div>
+		</div>
+		<script src="js/vue-touch-events.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>
