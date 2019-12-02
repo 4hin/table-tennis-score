@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1">
@@ -51,10 +51,10 @@
 						v-show="!gaming">
 				<div class="btn-group btn-group-toggle h-100 w-75" data-toggle="buttons">
 					<template v-for="(item, index) in modes">
-						<label :for="index" class="btn btn-primary h-100"
-								 v-bind:class="{active: mode == item }">
+						<label :for="`pint_${index}`" class="btn btn-primary h-100"
+							   v-bind:class="{active: mode == item }">
 							<input name="mode" type="radio"
-										 :id="index" :value="item" v-model="mode" :disabled="gaming" />
+										 :id="`pint_${index}`" :value="item" v-model="mode" :disabled="gaming" />
 							<h2>{{ item }}</h2>
 						</label>
 				</template>
@@ -62,6 +62,19 @@
 				<div class="col">
 					<button class="btn btn-primary btn-lg h-100 w-100"
 								   @click="set()"><i class="fas fa-play fa-2x"></i></button>
+				</div>
+			</div>
+			<div class="row h-25 m-1"
+					v-show="!gaming">
+				<div class="btn-group btn-group-toggle h-75 w-75" data-toggle="buttons">
+					<template v-for="v in langs">
+						<label :for="`lang_${v}`" class="btn btn-primary h-100"
+						v-bind:class="{active: lang == v }">
+							<input name="lang" type="radio"
+								   :id="`lang_${v}`" :value="v" v-model="lang">
+							<h2>{{ v }}</h2>
+						</label>
+					</template>
 				</div>
 			</div>
 		</div>

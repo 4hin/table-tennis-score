@@ -2,7 +2,10 @@
 // import Vue from 'vue'
 // import Vue2TouchEvents from 'vue2-touch-events'
 
-// Vue.use(vueTouchEvents)
+	// Vue.use(vueTouchEvents)
+
+	const LANG_JP = 'ja-JP';
+	const LANG_US = 'en-US';
 	class User {
 		constructor() {
 			this.score = 0;
@@ -33,11 +36,12 @@
 	}
 
 	class Speech {
-		static speak(str, isCancel = false) {
+		static speak(str, lang = LANG_JP, isCancel = false) {
 			if (isCancel) {
 				Speech.cancel();
 			}
 			let a = new SpeechSynthesisUtterance(str);
+			a.lang = lang;
 			speechSynthesis.speak(a);
 		}
 		static cancel() {
@@ -54,6 +58,9 @@
 			gaming: false,
 			modes: games,
 			mode: 10,
+			langs: [LANG_JP, LANG_US],
+			lang: LANG_JP,
+			// lang: LANG_US,
 			mute: false,
 			user1: new User(),
 			user2: new User()
@@ -94,12 +101,21 @@
 						switch (Util.getGameState(this.user1, this.user2, this.mode)) {
 						case 1:
 						case -1:
-							str += "\n試合終了";
+							str += (this.lang == LANG_JP) ? "\n試合終了" : "\n game set";
 							break;
 						default:
+							if (user.score == this.mode-1) {
+								if (this.user1.score == this.user2.score) {
+									str += "\nduce";
+								} else if (user == this.user1 && this.user1.score > this.user2.score
+										   || user == this.user2 && this.user1.score < this.user2.score) {
+									// str += "\nマッチポイント";
+									str += "\nmatch point";
+								}
+							}
 						}
 						if (!this.mute) {
-							Speech.speak(str);
+							Speech.speak(str, this.lang, true);
 						}
 
 					}, 350);
