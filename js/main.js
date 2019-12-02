@@ -106,10 +106,9 @@
 						default:
 							if (user.score == this.mode-1) {
 								if (this.user1.score == this.user2.score) {
-									str += "\nduce";
+									str += "\ndeuce";
 								} else if (user == this.user1 && this.user1.score > this.user2.score
 										   || user == this.user2 && this.user1.score < this.user2.score) {
-									// str += "\nマッチポイント";
 									str += "\nmatch point";
 								}
 							}
