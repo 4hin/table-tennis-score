@@ -167,6 +167,10 @@
 			this.mode = this.modes[1];
 		}
 	});
+	vue.voices = Speech.getVoices();
+	if (vue.voices.length > 0) {
+		vue.name = vue.voices[0].name;
+	}
 	window.speechSynthesis.onvoiceschanged = function() {
 		vue.voices = Speech.getVoices();
 		vue.name = vue.voices[0].name;
