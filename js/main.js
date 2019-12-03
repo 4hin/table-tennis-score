@@ -44,13 +44,15 @@
 		// 	a.lang = lang;
 		// 	speechSynthesis.speak(a);
 		// }
-		static speak(str, voice, isCancel = false) {
+		static speak(str, voiceName, isCancel = false) {
 			if (isCancel) {
 				Speech.cancel();
 			}
 			let a = new SpeechSynthesisUtterance(str);
-			console.log(voice);
-			a.voice = voice;
+			console.log(voiceName);
+			a.voice = speechSynthesis.getVoices().filter(voice => {
+				return voice.name == voiceName;
+			})[0];
 			speechSynthesis.speak(a);
 		}
 		static cancel() {
@@ -133,9 +135,8 @@
 							}
 						}
 						if (!this.mute) {
-							let voice = this.voices.filter((arg) => arg.name == this.name)[0];
 							// Speech.speak(str, this.lang, true);
-							Speech.speak(str, voice, true);
+							Speech.speak(str, this.name, true);
 						}
 
 					}, 350);
