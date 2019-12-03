@@ -1,11 +1,7 @@
 (() => {
-// import Vue from 'vue'
-// import Vue2TouchEvents from 'vue2-touch-events'
-
-	// Vue.use(vueTouchEvents)
-
 	const LANG_JP = 'ja-JP';
 	const LANG_US = 'en-US';
+	const uttr = new SpeechSynthesisUtterance();
 	class User {
 		constructor() {
 			this.score = 0;
@@ -48,12 +44,13 @@
 			if (isCancel) {
 				Speech.cancel();
 			}
-			let a = new SpeechSynthesisUtterance(str);
+
 			console.log(voiceName);
-			a.voice = speechSynthesis.getVoices().filter(voice => {
+			uttr.text = str;
+			uttr.voice = speechSynthesis.getVoices().filter(voice => {
 				return voice.name == voiceName;
 			})[0];
-			speechSynthesis.speak(a);
+			speechSynthesis.speak(uttr);
 		}
 		static cancel() {
 			if (speechSynthesis.speaking) {
