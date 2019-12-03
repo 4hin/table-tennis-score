@@ -65,7 +65,15 @@
 				</div>
 			</div>
 			<div class="row h-25 m-1"
-					v-show="!gaming">
+						v-show="!gaming">
+				<div class="form-group">
+					<select class="form-control" v-model="name">
+						<template v-for="voice in voices">
+							<option :value="voice.name">{{ voice.name }}</option>
+						</template>
+					</select>
+				</div>
+				<!--
 				<div class="btn-group btn-group-toggle h-75 w-75" data-toggle="buttons">
 					<template v-for="v in langs">
 						<label :for="`lang_${v}`" class="btn btn-primary h-100"
@@ -76,6 +84,7 @@
 						</label>
 					</template>
 				</div>
+				-->
 			</div>
 		</div>
 		<script src="js/main.js"></script>

@@ -36,18 +36,32 @@
 	}
 
 	class Speech {
-		static speak(str, lang = LANG_JP, isCancel = false) {
+		// static speak(str, lang = LANG_JP, isCancel = false) {
+		// 	if (isCancel) {
+		// 		Speech.cancel();
+		// 	}
+		// 	let a = new SpeechSynthesisUtterance(str);
+		// 	a.lang = lang;
+		// 	speechSynthesis.speak(a);
+		// }
+		static speak(str, voice, isCancel = false) {
 			if (isCancel) {
 				Speech.cancel();
 			}
 			let a = new SpeechSynthesisUtterance(str);
-			a.lang = lang;
+			console.log(voice);
+			a.voice = voice;
 			speechSynthesis.speak(a);
 		}
 		static cancel() {
 			if (speechSynthesis.speaking) {
 				speechSynthesis.cancel();
 			}
+		}
+		static getVoices() {
+			return speechSynthesis.getVoices().filter(voice => {
+				return voice.lang == LANG_JP || voice.lang == LANG_US;
+			});
 		}
 	}
 	var tapCount = 0;
@@ -60,8 +74,11 @@
 			mode: 10,
 			langs: [LANG_JP, LANG_US],
 			lang: LANG_JP,
-			// lang: LANG_US,
 			mute: false,
+			voices: [],
+			name: '',
+			// lang: LANG_US,
+
 			user1: new User(),
 			user2: new User()
 		},
@@ -85,6 +102,7 @@
 				this.gaming = true;
 			},
 			touchstart(e, user) {
+				window.hoge = e;
 				if (!this.gaming) {
 					e.preventDefault();
 					return;
@@ -101,7 +119,8 @@
 						switch (Util.getGameState(this.user1, this.user2, this.mode)) {
 						case 1:
 						case -1:
-							str += (this.lang == LANG_JP) ? "\n試合終了" : "\n game set";
+							// str += (this.lang == LANG_JP) ? "\n試合終了" : "\n game set";
+							str += "\n game set";
 							break;
 						default:
 							if (user.score == this.mode-1) {
@@ -114,7 +133,9 @@
 							}
 						}
 						if (!this.mute) {
-							Speech.speak(str, this.lang, true);
+							let voice = this.voices.filter((arg) => arg.name == this.name)[0];
+							// Speech.speak(str, this.lang, true);
+							Speech.speak(str, voice, true);
 						}
 
 					}, 350);
@@ -146,8 +167,11 @@
 			this.mode = this.modes[1];
 		}
 	});
+	window.speechSynthesis.onvoiceschanged = function() {
+		vue.voices = Speech.getVoices();
+		vue.name = vue.voices[0].name;
+	};
 
-	// var tapCount = 0;
 	// document.querySelector('button').addEventListener('touchstart', function(e) {
 	// 	if (!tapCount) {
 	// 		++tapCount;
