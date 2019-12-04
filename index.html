@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-4 p-0">
 					<button type="button" class="btn btn-outline-secondary btn-lg btn-block h-100"
-								  @touchstart ="touchstart($event, user2)"
+								  @click ="click($event, user2)"
 								  :disabled="!isGame">
 						<i class="far fa-user fa-3x"></i>
 						<h1>{{ user2.score }}</h1>
