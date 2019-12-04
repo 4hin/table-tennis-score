@@ -59,7 +59,15 @@
 		static getVoices() {
 			return speechSynthesis.getVoices().filter(voice => {
 				return voice.lang == LANG_JP || voice.lang == LANG_US;
-			});
+			}).sort(Speech.sort);
+		}
+		static sort(a, b) {
+			if (a.lang == LANG_JP) {
+				return -1;
+			} else if (b.lang == LANG_JP) {
+				return 1;
+			}
+			return 0;
 		}
 		static getLang(name) {
 			let lang = speechSynthesis.getVoices().filter(voice => {
