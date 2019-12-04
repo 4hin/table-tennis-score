@@ -16,7 +16,7 @@
 			<div class="row justify-content-around h-50 mt-1 mb-1">
 				<div class="col-4 p-0">
 					<button type="button" class="btn btn-outline-primary btn-lg btn-block h-100"
-							@touchstart ="touchstart($event, user1)"
+							@click ="click($event, user1)"
 								  :disabled="!gaming">
 						<i class="fa fa-user fa-3x"></i>
 						<h1>{{ user1.score }}</h1>
@@ -59,7 +59,7 @@
 						</label>
 				</template>
 				</div>
-				<div class="col">
+				<div class="h-100 w-25 pl-1">
 					<button class="btn btn-primary btn-lg h-100 w-100"
 								   @click="set()"><i class="fas fa-play fa-2x"></i></button>
 				</div>
